@@ -1,0 +1,108 @@
+mycar:
+  type: 福特
+  term: 福克斯
+  my-user:
+    id: 100
+    name: shushu
+    age: 7
+    email: shushu@qq.com
+
+spring:
+  mvc:
+    #调整静态资源uri访问路径 静态资源默认放在项目 /static (or /public or /resources or /META-INF/resources 路径下
+    #static-path-pattern: "/res/**"
+#  web:
+#    resource:
+#      static-location: "XXX"
+  datasource:
+    url: jdbc:mysql://localhost:3306/book
+    username: root
+    password: 12345678
+    driverClassName: com.mysql.cj.jdbc.Driver
+
+    druid:
+      filters: stat,wall
+      filter:
+        stat:
+          enabled: true
+        wall:
+          enabled: true
+      stat-view-servlet:
+        enabled: true
+        loginUsername: admin
+        loginPassword: 123456
+      web-stat-filter:
+        enbled: true
+
+  redis:
+    cluster:
+      nodes: 10.211.55.101:7001,10.211.55.101:7002,10.211.55.101:7003,10.211.55.101:7004,10.211.55.101:7005,10.211.55.101:7006
+    client-type: jedis
+
+  cache:
+    type: REDIS
+    cacheNames: myCache,otherCache #启动时创建缓存的名称
+    redis:
+      timeToLive: 60000  #缓存超时时间ms
+      cacheNullValues: false
+      keyPrefix: 'pp:'
+      enableStatistics: true
+
+  banner:
+    image:
+      location: classpath:static/banner.png
+
+  profiles:
+    active: dev,prod
+
+  quartz:
+    job-store-type: jdbc
+    jdbc:
+      initialize-schema: always
+
+  task:
+    scheduling: # @EnableScheduling  任务调度
+      thread-name-prefix: "my-schedule-thread-no:"
+      pool:
+        size: 10 # 默认是1，单线程执行任务
+      shutdown:
+        await-termination: true
+        await-termination-period: 60
+
+    execution:  # @EnableAsync 异步任务执行
+      thread-name-prefix: "my-execution-thread-no:"
+      pool:
+        queue-capacity: 50
+        max-size: 20
+        keep-alive: "10s"
+
+mybatis:
+  mapperLocations: classpath:mapper/*.xml
+  configuration:
+    mapUnderscoreToCamelCase: true
+
+logging:
+  level:
+    org.springframework.jdbc.core.JdbcTemplate: DEBUG
+
+server:
+  shutdown: "graceful"
+  port: 8008
+  tomcat:
+    base-dir: "my-tomcat"
+    access-log:
+      enabled: true
+      pattern: "%t %a %r %s (%D ms)"
+
+my:
+  datasource:
+    one:
+      jdbc-url: "jdbc:mysql://localhost:3306/me"
+      username: root
+      password: 12345678
+    two:
+      url: "jdbc:mysql://localhost:3306/book"
+      username: root
+      password: 12345678
+
+

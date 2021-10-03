@@ -1,0 +1,23 @@
+server:
+  shutdown: "graceful"
+  port: 8081
+
+debug: true #debug模式
+
+spring:
+  output:
+    ansi:
+      enabled: ALWAYS  #输出颜色编码
+
+logging:
+  file:
+    #name: springboot.log
+    path: /Users/zhanwei/Downloads  # name、path参数不可以同时使用
+  logback:
+    rollingpolicy:
+      #file-name-pattern: my-spring-boot
+      max-file-size: 1MB #日志文件大小上限，达到该上限后，会自动压缩
+      max-history: 3 #日志文件保存的天数
+
+  level: #包级别的日志等级
+    org.springframework.web: "debug"  #开启这个表下面的日志级别为debug
